@@ -1,6 +1,6 @@
 package edu.escuelaing.edu.co.httpServer;
 
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
+
 
 import java.net.*;
 import java.io.*;
@@ -27,7 +27,7 @@ public class HttpServer {
     }
 
     public  void startServer(String[] args) throws IOException {
-        int port =8080;
+        int port =getPort();;
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(port);
@@ -51,6 +51,12 @@ public class HttpServer {
 
 
         serverSocket.close();
+    }
+    static int getPort() {
+        if (System.getenv("PORT") != null) {
+            return Integer.parseInt(System.getenv("PORT"));
+        }
+        return 5000; //returns default port if heroku-port isn't set(i.e. on localhost)
     }
     private static Double valuePi (String num){
         Double pi= 1.0;
