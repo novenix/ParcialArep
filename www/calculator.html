@@ -24,7 +24,7 @@
 </form>
 <script>
     const submiting = ( ) =>{
-        fetch(`http://localhost:8080/${document.getElementById(op).value}?num="${document.getElementById(val)}"&op="${document.getElementById(op)}"`)
+        fetch(`https://parcialarepniolas.herokuapp.com/${document.getElementById(op).value}?num="${document.getElementById(val)}"&op="${document.getElementById(op)}"`)
             .then(response=>response.json())
 
 
