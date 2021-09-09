@@ -153,48 +153,67 @@ public class HttpServer {
     public String createResponse(String path){
         String type = "text/html";
         System.out.println(path+"path");
-       /* if(path.contains("/calculator.html") && path.contains("number")&path.contains("op")){
+        String rta= "";
+       if(path.contains("?")){
+                String op= path.substring(15,18);
+                String num= path.substring(23);
+           System.out.println(op+"///"+num);
 
-            Double Answer = 0.0;
-            outputLine="";
-            ;switch (inputLine){
-                case "fun:sin":
-                    selectedFunction = "sin";
-                    break;
-                case "fun:cos":
-                    selectedFunction = "cos";
-                    break;
-                case "fun:tan":
-                    selectedFunction = "tan";
-                    break;
-                default:
-                    int pi = -1;
-                    int div = -1;
-                    String[] values = new String[0];
-                    if(inputLine.contains("/")){
-                        values= inputLine.trim().split("/");
-                        Answer = calculatesinoscon(values[0],values[1]);
+               switch (op){
+                   case "sin":
+                       System.out.println("Seno");
+                       rta = String.valueOf(Math.sin(Double.parseDouble(num)));
+                       break;
+                   case "cos":
+                       System.out.println("Coseno");
+                       rta = String.valueOf(Math.cos(Double.parseDouble(num)));
+                       break;
+                   case "tan":
+                       System.out.println("Tangente");
+                       rta = String.valueOf(Math.tan(Double.parseDouble(num)));
+                       break;
+               }
+               assert rta != null;
+           System.out.println(rta+"PRIMER RTA");
 
-                    }
-                    else{
-                        Answer = calculatesinoscon(inputLine.trim());
-                    }
+       }
+        //para leer archivos
+        /* if(path.contains("/calculator.html") && path.contains("number")&path.contains("op")){
 
 
-
-                    outputLine = "Respuesta "+inputLine +" :" + Answer;
 
 
             }
         }*/
-        //para leer archivos
+
         try {
-            path=path.substring(0,path.indexOf("?"));
+            //path=path.substring(0,path.indexOf("?"));
+
+            Path file = Paths.get("./www"+path);
+            Charset charset = Charset.forName("UTF-8");
+            String outmsg ="";
+            try (BufferedReader reader = Files.newBufferedReader(file, charset)) {
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                    outmsg = outmsg + line;
+                }
+            } catch (IOException x) {
+                System.err.format("IOException: %s%n", x);
+            }
+            return "HTTP/1.1 200 OK\r\n"
+                    + "Content-Type: "+type+"\r\n"
+                    + "\r\n"+ outmsg;
         }
         catch (Exception e){
             path=path;
-        }
 
+            System.out.println(rta+"asdasd RTA");
+            return "HTTP/1.1 200 OK\r\n"
+                    + "Content-Type: "+type+"\r\n"
+                    + "\r\n"+"{rta: "+ rta+"}";
+        }
+/*
         Path file = Paths.get("./www"+path);
         Charset charset = Charset.forName("UTF-8");
         String outmsg ="";
@@ -209,6 +228,7 @@ public class HttpServer {
         }
         return "HTTP/1.1 200 OK\r\n"
                 + "Content-Type: "+type+"\r\n"
-                + "\r\n"+ outmsg;
+                + "\r\n"+ outmsg;*/
     }
 }
+
