@@ -7,27 +7,31 @@
 </head>
 <body>
 <form action="/calculator.html" method="get">
-    <select id="op">
+    <input id="valor" name="numero">
+    <select id="option" name="option">
+        <option value="novalor">
+            seleccione seno cos o tan
+        </option>
         <option value="sin">
-            sin
+            sinus
         </option>
         <option value="cos">
-            cos
+            cosinus
         </option>
         <option value="tan">
-            tan
+            tang
         </option>
     </select>
-    <input id="val" name="valor">
-    <input type="submit" name="button1"  />
+
+
 
 </form>
 <script>
     const submiting = ( ) =>{
-        fetch(`http://localhost:35000/${document.getElementById(op).value}?number=${document.getElementById(val.value(val))}`
+        fetch(`http://localhost:8080/${document.getElementById(op).value}?option="${document.getElementById(option)}"&&numero="${document.getElementById(valor)}"`)
             .then(response=>response.json())
 
-        )
+
     }
 </script>
 </body>

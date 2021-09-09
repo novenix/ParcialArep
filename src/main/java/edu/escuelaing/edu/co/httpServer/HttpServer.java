@@ -27,7 +27,7 @@ public class HttpServer {
     }
 
     public  void startServer(String[] args) throws IOException {
-        int port =35000;
+        int port =8080;
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(port);
@@ -52,7 +52,7 @@ public class HttpServer {
 
         serverSocket.close();
     }
-    private static Double checkPi (String num){
+    private static Double valuePi (String num){
         Double pi= 1.0;
         String[] listnum;
         String number = num;
@@ -71,10 +71,10 @@ public class HttpServer {
         }
         return ans;
     }
-    private static Double calculateFun (String num1,String num2){
+    private static Double calculatesinoscon (String num1,String num2){
         System.out.println(num1+" "+num2);
-        Double pi1= checkPi(num1);
-        Double pi2= checkPi(num2);
+        Double pi1= valuePi(num1);
+        Double pi2= valuePi(num2);
         Double answer=0.0;
         if(selectedFunction.equals("sin")){
             answer=Math.sin(pi1/pi2);
@@ -87,8 +87,8 @@ public class HttpServer {
         }
         return answer;
     }
-    private static Double calculateFun (String num){
-        Double pi= checkPi(num);
+    private static Double calculatesinoscon (String num){
+        Double pi= valuePi(num);
         Double answer=0.0;
         if(selectedFunction.equals("sin")){
             answer=Math.sin(pi);
@@ -125,41 +125,11 @@ public class HttpServer {
             } else{
 
                 System.out.println("path"+path);
+                System.out.println(inputLine+"asdasdas");
+                //URL url = new URL(inputLine);
+                //System.out.println(url.getQuery());
 
 
-                if(path.contains("/calculator.html") && path.contains("valor")){
-                    Double Answer = 0.0;
-                    outputLine="";
-                    ;switch (inputLine){
-                        case "fun:sin":
-                            selectedFunction = "sin";
-                            break;
-                        case "fun:cos":
-                            selectedFunction = "cos";
-                            break;
-                        case "fun:tan":
-                            selectedFunction = "tan";
-                            break;
-                        default:
-                            int pi = -1;
-                            int div = -1;
-                            String[] values = new String[0];
-                            if(inputLine.contains("/")){
-                                values= inputLine.trim().split("/");
-                                Answer = calculateFun(values[0],values[1]);
-
-                            }
-                            else{
-                                Answer = calculateFun(inputLine.trim());
-                            }
-
-
-
-                            outputLine = "Respuesta "+inputLine +" :" + Answer;
-
-
-                    }
-                }
                 System.out.println("header: "+inputLine);
                 //System.out.println("outpusadaskhdbaskdbhkasbdiasbdkjbaskdbaksdbaskdb: "+inputLine);
                 headers.add(inputLine);
@@ -182,17 +152,49 @@ public class HttpServer {
     }
     public String createResponse(String path){
         String type = "text/html";
-        if(path.endsWith(".css")){
-            type = "text/css";
-        } else if(path.endsWith(".js") ){
-            type = "text/javascript";
-        }
-        else if(path.endsWith(".jpeg")){
-            type = "image/jpeg";
-        }else if(path.endsWith(".png")){
-            type = "image/png";
-        }
+        System.out.println(path+"path");
+       /* if(path.contains("/calculator.html") && path.contains("number")&path.contains("op")){
+
+            Double Answer = 0.0;
+            outputLine="";
+            ;switch (inputLine){
+                case "fun:sin":
+                    selectedFunction = "sin";
+                    break;
+                case "fun:cos":
+                    selectedFunction = "cos";
+                    break;
+                case "fun:tan":
+                    selectedFunction = "tan";
+                    break;
+                default:
+                    int pi = -1;
+                    int div = -1;
+                    String[] values = new String[0];
+                    if(inputLine.contains("/")){
+                        values= inputLine.trim().split("/");
+                        Answer = calculatesinoscon(values[0],values[1]);
+
+                    }
+                    else{
+                        Answer = calculatesinoscon(inputLine.trim());
+                    }
+
+
+
+                    outputLine = "Respuesta "+inputLine +" :" + Answer;
+
+
+            }
+        }*/
         //para leer archivos
+        try {
+            path=path.substring(0,path.indexOf("?"));
+        }
+        catch (Exception e){
+            path=path;
+        }
+
         Path file = Paths.get("./www"+path);
         Charset charset = Charset.forName("UTF-8");
         String outmsg ="";

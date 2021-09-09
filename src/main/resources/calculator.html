@@ -19,12 +19,12 @@
         </option>
     </select>
     <input id="val" name="valor">
-    <input type="submit" name="button1"  />
+
 
 </form>
 <script>
     const submiting = ( ) =>{
-        fetch(`http://localhost:35000/${document.getElementById(op).value}?number=${document.getElementById(val)}`
+        fetch(`http://localhost:8080/${document.getElementById(op).value}?number=${document.getElementById(val)}&op=${op}`
             .then(response=>response.json())
 
         )
